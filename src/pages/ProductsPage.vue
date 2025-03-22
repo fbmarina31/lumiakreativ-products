@@ -1,39 +1,82 @@
 <template>
-<q-page padding>
+  <q-page padding>
     <q-banner class="text-grey-9 bg-white text-center">
-     Du bist auf der Suche nach einer Kleinigkeit für dich oder zum verschenken? Dann wirst du hoffentlich bei uns fündig.<br> Gerne erstellen und personalisieren wir auch etwas nach deinen Wünschen. <br>Melde Dich gerne bei uns über die oben rechts aufgezeigten Kontaktmöglichkeiten. 
+      Du bist auf der Suche nach einer Kleinigkeit für dich oder zum verschenken? Dann wirst du
+      hoffentlich bei uns fündig.<br />
+      Gerne erstellen und personalisieren wir auch etwas nach deinen Wünschen. <br />Melde Dich
+      gerne bei uns über die oben rechts aufgezeigten Kontaktmöglichkeiten.
     </q-banner>
-  <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card" flat bordered style="width: 300px">
-      <img src="https://static.wixstatic.com/media/65c703_0e621d2ad076401c9fbd77a2dd589639~mv2.jpg/v1/fill/w_575,h_500,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/20240217_125721300_iOS.jpg">
-      <q-list>
+    <div class="q-pa-md row items-start q-gutter-md">
+      <q-card
+        flat
+        bordered
+        style="width: 300px; height: 550px"
+        v-for="product in products"
+        :key="product.id"
+      >
+        <img :src="product.image" />
+        <q-list>
           <q-item-section>
-            <q-item-label class="text-h5 bg-grey-3 q-pa-xs text-center">Set Osterschale</q-item-label>
+            <q-item-label class="text-h5 bg-grey-3 q-pa-xs text-center">{{
+              product.title
+            }}</q-item-label>
             <div class="row q-pa-xs q-mt-sm">
               <div class="q-px-xs">Nr.</div>
-              <div class="q-px-xs text-weight-bold">120</div>
+              <div class="q-px-xs text-weight-bold">{{ product.id }}</div>
             </div>
             <div class="row q-pa-xs">
               <div class="q-px-xs">Preis</div>
-              <div class="q-px-xs text-weight-bold">9,00€</div>
+              <div class="q-px-xs text-weight-bold">{{ product.price }} €</div>
             </div>
             <div class="row q-pa-xs">
               <div class="q-px-xs">Maße</div>
-              <div class="q-px-xs text-weight-bold">10 x 5 x 3 cm</div>
+              <div class="q-px-xs text-weight-bold">{{ product.size }}</div>
             </div>
             <div class="row q-pa-xs">
               <div class="q-px-xs">Beschreibung</div>
-              <div class="q-px-xs text-weight-bold">Das Set gibt es wahlweise in weiß oder grau</div>
+              <div class="q-px-xs text-weight-bold">
+                {{ product.description }}
+              </div>
             </div>
           </q-item-section>
-      </q-list>
-    </q-card>
+        </q-list>
+      </q-card>
     </div>
-
-        </q-page> 
+  </q-page>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  size: string;
+  description: string;
+  image: string;
+  categories: string[];
+}
 
+const products = ref<Product[]>([
+  {
+    id: 1,
+    title: 'Lumia 950',
+    price: 100.0,
+    description:
+      'The Lumia 950 is a Windows 10 Mobile-based smartphone developed by Microsoft Mobile.',
+    image: './images/schmetterling.jpg',
+    size: '145 x 73.2 x 8.2 mm',
+    categories: ['smartphone', 'microsoft'],
+  },
+  {
+    id: 2,
+    title: 'Wohnwagen',
+    price: 100.0,
+    description: 'Der Wohnwagen ist ein Anhänger, der als Wohnraum genutzt wird.',
+    image: './images/wohnwagen.jpg',
+    size: '5m x 2m',
+    categories: ['wohnwagen', 'wohnmobil'],
+  },
+]);
 </script>
