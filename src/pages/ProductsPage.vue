@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 interface Product {
   id: number;
@@ -58,25 +58,13 @@ interface Product {
   categories: string[];
 }
 
-const products = ref<Product[]>([
-  {
-    id: 1,
-    title: 'Lumia 950',
-    price: 100.0,
-    description:
-      'The Lumia 950 is a Windows 10 Mobile-based smartphone developed by Microsoft Mobile.',
-    image: './images/schmetterling.jpg',
-    size: '145 x 73.2 x 8.2 mm',
-    categories: ['smartphone', 'microsoft'],
-  },
-  {
-    id: 2,
-    title: 'Wohnwagen',
-    price: 100.0,
-    description: 'Der Wohnwagen ist ein Anhänger, der als Wohnraum genutzt wird.',
-    image: './images/wohnwagen.jpg',
-    size: '5m x 2m',
-    categories: ['wohnwagen', 'wohnmobil'],
-  },
-]);
+const products = ref<Product[]>([]);
+
+onMounted(async () => {
+  await fetch('./products.json')
+    .then((response) => response.json())
+    .then((data) => {
+      products.value = data;
+    });
+});
 </script>
